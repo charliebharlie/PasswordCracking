@@ -20,7 +20,7 @@ public class PasswordStorage {
 
     protected PasswordNode root; //the root of this BST that contains passwords
     private int size; //how many passwords are in the BST
-    private final Attribute COMPARISON_CRITERIA; //what password information to use to determine
+    private static Attribute COMPARISON_CRITERIA; //what password information to use to determine
     // order in the tree
 
     /**
@@ -30,18 +30,20 @@ public class PasswordStorage {
      */
     public PasswordStorage(Attribute comparisonCriteria) {
         //TODO
-        this.COMPARISON_CRITERIA = comparisonCriteria;
+        COMPARISON_CRITERIA = comparisonCriteria;
         this.size = 0;
 //        this.root = new PasswordNode(new Password("", 0));
     }
+
+
 
     /**
      * Getter for this BST's criteria for determining order in the three
      *
      * @return the Attribute that is being used to make comparisons in the tree
      */
-    public Attribute getComparisonCriteria() {
-        return this.COMPARISON_CRITERIA; //TODO
+    public static Attribute getComparisonCriteria() {
+        return COMPARISON_CRITERIA; //TODO
     }
 
     /**
@@ -233,9 +235,7 @@ public class PasswordStorage {
         while (temp.getLeft() != null) {
             temp = temp.getLeft();
         }
-//        if(root.getPassword().compareTo(root.getLeft().getPassword(), COMPARISON_CRITERIA) < 0){
-//
-//        }
+
         return temp.getPassword(); //TODO
     }
 
@@ -251,8 +251,7 @@ public class PasswordStorage {
         if (lookup(toAdd) != null) {
             throw new IllegalArgumentException("Matching password object is already in the tree");
         }
-        PasswordNode node = new PasswordNode(toAdd);
-        addPasswordHelper(toAdd, node);
+        addPasswordHelper(toAdd, this.root);
         size++;
         //TODO
     }

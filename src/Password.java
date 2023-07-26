@@ -36,9 +36,10 @@ public class Password {
 
     private static final String MAX_SHA1_HASH = "ffffffffffffffffffffffffffffffffffffffff";
     private static final String MIN_SHA1_HASH = "0000000000000000000000000000000000000000";
-    private static final int MAX_LENGTH = 14; // max number of characters a password can have
+    private static final int MAX_LENGTH = 32; // max number of characters a password can have
     private static final int MAX_OCCURRENCES = 1000000000; // max number of times a password
     // could have been repeated, 1 billion
+    private static final Attribute COMPARISON_CRITERIA = PasswordStorage.getComparisonCriteria();
 
     /**
      * Constructor for a new password object with the given password and number of occurrences.
@@ -173,10 +174,21 @@ public class Password {
      * [STRENGTH_RATING]"
      * @author Michelle
      */
+
+
     @Override
     public String toString() {
-        return this.password + "(" + this.hashedPassword + "): " + this.occurrences + " ["
-                + this.strengthRating + "]";
+        if(COMPARISON_CRITERIA == Attribute.STRENGTH_RATING){
+            return this.password + " (Strength " +
+                    "rating: " + this.strengthRating + ")";
+        }
+        else if(COMPARISON_CRITERIA == Attribute.OCCURRENCE){
+            return this.password + "(Occurrences: " + this.occurrences + ")";
+        }
+        else if (COMPARISON_CRITERIA == Attribute.HASHED_PASSWORD){
+            return this.password + "(Hashed Password: " + this.hashedPassword + ")";
+        }
+        return "" + COMPARISON_CRITERIA;
     }
 
     /**
